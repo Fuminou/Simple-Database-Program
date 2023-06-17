@@ -1,0 +1,82 @@
+<!-- departments.hbs -->
+
+<head>
+<title>Departments</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<!-- Add links in one line -->
+<div>
+    <a href="/">Students</a> | <a href="/instructors">Instructors</a> | <a href="/departments">Departments</a> | <a href="/studentClass">Student Class</a> 
+</div>
+
+<table>
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell (these are the attribute names) --}}
+        <tr>
+            {{#each departments.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{#each departments}}
+        <tr>
+            <td>{{this.department_id}}</td>
+            <td>{{this.name}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{!-- Form to add a record to the table  --}}
+<h2>Add new department here</h2>
+<p>To add a department, enter the name below and click "Submit".</p>
+<form id="add-department-form" method="POST" action="/add_new_department" onsubmit="">
+    <fieldset>
+        <legend class="required-field">Department Name:</legend>
+        <label for="input-department_name">Name </label>
+        <input type="text" name="input-department_name" id="input-department_name">
+    </fieldset>
+    <br/>
+    <input type="submit">
+</form>
+
+<!-- Form to update a department -->
+<h2>Update a department</h2>
+<form id="update-department-form" method="POST" action="/update_department" onsubmit="">
+    <fieldset>
+        <legend class="required-field">Select department:</legend>
+        <select name="department_id">
+            {{#each departments}}
+            <option value="{{this.department_id}}">{{this.department_id}}</option>
+            {{/each}}
+        </select>
+        <label for="input-update_department_name">Name</label>
+        <input type="text" name="input-update_department_name" id="input-update_department_name">
+    </fieldset>
+    <br/>
+    <input type="submit">
+</form>
+
+<!-- Form to delete a department -->
+<h2>Delete a Department</h2>
+<form id="delete-department-form" method="POST" action="/delete_department" onsubmit="return confirm('Are you sure you want to delete this department?')">
+    <fieldset>
+        <legend class="required-field">Select Department:</legend>
+        <select name="department_id">
+            {{#each departments}}
+            <option value="{{this.department_id}}">{{this.department_id}}</option>
+            {{/each}}
+        </select>
+    </fieldset>
+    <br/>
+    <input type="submit" value="Delete Department">
+</form>

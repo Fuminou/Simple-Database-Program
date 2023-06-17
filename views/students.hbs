@@ -1,0 +1,101 @@
+<!-- students.hbs -->
+
+<head>
+    <title>Students</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<!-- Add links in one line -->
+<div>
+    <a href="/">Students</a> | <a href="/instructors">Instructors</a> | <a href="/departments">Departments</a> | <a href="/studentClass">Student Class</a> 
+</div>
+
+<table>
+    <!-- Header section -->
+    <thead>
+        <tr>
+            {{#each students.[0]}}
+            <th>{{@key}}</th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    <!-- Body section -->
+    <tbody>
+        {{#each students}}
+        <tr>
+            <td>{{this.student_id}}</td>
+            <td>{{this.f_name}}</td>
+            <td>{{this.l_name}}</td>
+            <td>{{this.major}}</td>
+            <td>{{this.credits_remaining}}</td>
+            <td>{{this.gpa}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<!-- Form to add a record to the table -->
+<h2>Add new student here</h2>
+<p>To add a student, enter their information below and click "Submit".</p>
+<form id="add-student-form" method="POST" action="/add_new_student" onsubmit="return validateStudentForm()">
+    <fieldset>
+        <legend class="required-field">Name:</legend>
+        <label for="input-first_name">First</label>
+        <input type="text" name="input-first_name" id="input-first_name">
+        <label for="input-last_name">Last</label>
+        <input type="text" name="input-last_name" id="input-last_name">
+        <label for="input-major">Major</label>
+        <input type="text" name="input-major" id="input-major">
+        <label for="input-credits-remaining">Credits Remaining</label>
+        <input type="text" name="input-credits-remaining" id="input-credits-remaining">
+        <label for="input-gpa">GPA</label>
+        <input type="text" name="input-gpa" id="input-gpa">
+    </fieldset>
+    <br/>
+    <input type="submit">
+</form>
+
+<!-- Form to update a student -->
+<h2>Update a student</h2>
+<form id="update-student-form" method="POST" action="/update_student" onsubmit="">
+    <fieldset>
+        <legend class="required-field">Select Student:</legend>
+        <select name="student_id">
+            {{#each students}}
+            <option value="{{this.student_id}}">{{this.f_name}} {{this.l_name}}</option>
+            {{/each}}
+        </select>
+        <legend class="required-field">Name:</legend>
+        <label for="input-update_f_name">First</label>
+        <input type="text" name="input-update_f_name" id="input-update_f_name">
+        <label for="input-update_l_name">Last</label>
+        <input type="text" name="input-update_l_name" id="input-update_l_name">
+        <label for="input-update_major">Major</label>
+        <input type="text" name="input-update_major" id="input-update_major">
+        <label for="input-update_credits-remaining">Credits Remaining</label>
+        <input type="text" name="input-update_credits-remaining" id="input-update_credits-remaining">
+        <label for="input-update_gpa">GPA</label>
+        <input type="text" name="input-update_gpa" id="input-update_gpa">
+    </fieldset>
+    <br/>
+    <input type="submit">
+</form>
+
+<!-- Form to delete a student -->
+<h2>Delete a student</h2>
+<form id="delete-student-form" method="POST" action="/delete_student" onsubmit="return confirm('Are you sure you want to delete this student?')">
+    <fieldset>
+        <legend class="required-field">Select Student:</legend>
+        <select name="student_id">
+            {{#each students}}
+            <option value="{{this.student_id}}">{{this.f_name}} {{this.l_name}}</option>
+            {{/each}}
+        </select>
+    </fieldset>
+    <br/>
+    <input type="submit" value="Delete Student">
+</form>
+
+<!-- Embed our JavaScript validation script -->
+<script src="../js/input_validation.js"></script>

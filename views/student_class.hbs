@@ -1,0 +1,104 @@
+<!-- artists.hbs -->
+
+{{!-- Create a table --}}
+
+<head>
+<title>Students Class</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<!-- Add links in one line -->
+<div>
+    <a href="/">Students</a> | <a href="/instructors">Instructors</a> | <a href="/departments">Departments</a> | <a href="/studentClass">Student Class</a> 
+</div>
+
+<table>
+
+    {{!-- Header section --}}
+    <thead>
+
+        {{!-- For just the first row, we print each key of the row object as a header cell (these are the attribute names) --}}
+        <tr>
+            {{#each students.[0]}}
+            <th>
+                {{@key}}
+            </th>
+            {{/each}}
+        </tr>
+    </thead>
+
+    {{!-- Body section --}}
+    <tbody>
+        {{#each students}}
+        <tr>
+            <td>{{this.student_id}}</td>
+            <td>{{this.class_id}}</td>
+            <td>{{this.registered}}</td>
+            <td>{{this.grade}}</td>
+            <td>{{this.received_credit}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<!-- Form to add a record to the table -->
+<h2>Add new student class registration here</h2>
+<p>To add a student, enter their information below and click "Submit".</p>
+<form id="add-student-registration-form" method="POST" action="/add_new_student_registration" onsubmit="return validateRegisteredForm()">
+    <fieldset>
+        <legend class="required-field">Student Information:</legend>
+        <label for="input-student-id">Student ID</label>
+        <input type="text" name="input-student-id" id="input-student-id">
+        <label for="input-class-id">Class Id</label>
+        <input type="text" name="input-class-id" id="input-class-id">
+        <label for="input-registered">Registered</label>
+        <input type="text" name="input-registered" id="input-registered">
+        <label for="input-grade">Grade</label>
+        <input type="text" name="input-grade" id="input-grade">
+        <label for="input-received-credit">Received Credit</label>
+        <input type="text" name="input-received-credit" id="input-received-credit">
+    </fieldset>
+    <br/>
+    <input type="submit">
+</form>
+
+<!-- Form to update a student -->
+<h2>Update a student registration</h2>
+<form id="update-student-registration-form" method="POST" action="/update_student_registration" onsubmit="validateRegisteredForm()">
+    <fieldset>
+        <legend class="required-field">Select Student:</legend>
+        <select name="student_id">
+            {{#each students}}
+            <option value="{{this.student_id}}">{{this.student_id}}</option>
+            {{/each}}
+        </select>
+        <label for="input-class-id">Class Id</label>
+        <input type="text" name="input-class-id" id="input-class-id">
+        <label for="input-registered">Registered</label>
+        <input type="text" name="input-registered" id="input-registered">
+        <label for="input-grade">Grade</label>
+        <input type="text" name="input-grade" id="input-grade">
+        <label for="input-received-credit">Received Credit</label>
+        <input type="text" name="input-received-credit" id="input-received-credit">
+    </fieldset>
+    <br/>
+    <input type="submit">
+</form>
+
+<!-- Form to delete a student -->
+<h2>Delete a student registration</h2>
+<form id="delete-student-registration-form" method="POST" action="/delete_student_registration" onsubmit="return confirm('Are you sure you want to delete this student registration?')">
+    <fieldset>
+        <legend class="required-field">Select Student:</legend>
+        <select name="student_id">
+            {{#each students}}
+            <option value="{{this.student_id}}">{{this.student_id}}</option>
+            {{/each}}
+        </select>
+    </fieldset>
+    <br/>
+    <input type="submit" value="Delete Student">
+</form>
+
+<!-- Embed our JavaScript validation script -->
+<script src="../js/input_validation.js"></script>
